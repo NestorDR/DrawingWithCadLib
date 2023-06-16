@@ -1,0 +1,583 @@
+﻿<Window
+    x:Class="DrawingWithCadLib.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:DrawingWithCadLib"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:DrawingWithCadLib"
+    x:Name="DrawingWindow"
+    Title="Drawing with CadLib 6.0"
+    Width="901"
+    Height="500"
+    Loaded="MainWindow_OnLoaded"
+    Style="{StaticResource CustomizedDesignContentControl}"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+
+    <Window.Resources>
+        <vm:MainWindowViewModel x:Key="ViewModel" />
+        <Style TargetType="CheckBox">
+            <Setter Property="Margin" Value="2.5,5,2.5,0" />
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="2.5,5,2.5,0" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="2.5,0,2.5,0" />
+        </Style>
+        <Style TargetType="Button">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="2" />
+                </Style>
+            </Style.Resources>
+            <Setter Property="Background" Value="LightSteelBlue" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontWeight" Value="DemiBold" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Width" Value="100" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border
+                            x:Name="bg"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="White"
+                            BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bg" Property="Background" Value="DarkOrange" />
+                                <Setter Property="Cursor" Value="Hand" />
+                                <Setter Property="Foreground" Value="FloralWhite" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Opacity" Value="0.23" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <DockPanel x:Name="DockPanel">
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem>
+                <TextBlock
+                    x:Name="StatusBarTextBlock"
+                    Margin="0"
+                    Text="Put your info here..." />
+            </StatusBarItem>
+        </StatusBar>
+
+        <Grid
+            x:Name="MainGrid"
+            Margin="5,10,5,10"
+            DataContext="{StaticResource ViewModel}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MinWidth="155" />
+                <ColumnDefinition MinWidth="155" />
+                <ColumnDefinition MinWidth="155" />
+                <ColumnDefinition MinWidth="155" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!--#region shapes, sizes and positions-->
+            <Grid
+                x:Name="CircleGrid"
+                Grid.Row="0"
+                Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock
+                    x:Name="CircleXCoordinateTextBlock"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    FontWeight="Bold"
+                    Text="Circle" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Text="X coordinate" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Text="Y coordinate" />
+                <TextBox
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Text="{Binding Circle.XCoordinate}" />
+                <TextBox
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Text="{Binding Circle.YCoordinate}" />
+
+                <TextBlock
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Text="Radius" />
+                <TextBox
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Text="{Binding Circle.Radius}" />
+            </Grid>
+
+            <Canvas
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="0,0,0,-5"
+                Background="AliceBlue" />
+            <Grid
+                x:Name="RectangleGrid"
+                Grid.Row="0"
+                Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    FontWeight="Bold"
+                    Text="Rectangle" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Text="X coordinate" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Text="Y coordinate" />
+                <TextBox
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Text="{Binding Rectangle.XCoordinate}" />
+                <TextBox
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Text="{Binding Rectangle.YCoordinate}" />
+
+                <TextBlock
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Text="Length" />
+                <TextBlock
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Text="Height" />
+                <TextBox
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Text="{Binding Rectangle.Length}" />
+                <TextBox
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Text="{Binding Rectangle.Height}" />
+            </Grid>
+
+            <Grid
+                x:Name="RoundedRectangleGrid"
+                Grid.Row="0"
+                Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    FontWeight="Bold"
+                    Text="Rounded rectangle" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Text="X coordinate" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Text="Y coordinate" />
+                <TextBox
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Text="{Binding RoundedRectangle.XCoordinate}" />
+                <TextBox
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Text="{Binding RoundedRectangle.YCoordinate}" />
+
+                <TextBlock
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Text="Length" />
+                <TextBlock
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Text="Height" />
+                <TextBox
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Text="{Binding RoundedRectangle.Length}" />
+                <TextBox
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Text="{Binding RoundedRectangle.Height}" />
+
+                <TextBlock
+                    Grid.Row="5"
+                    Grid.Column="0"
+                    Text="Radius" />
+                <TextBox
+                    Grid.Row="6"
+                    Grid.Column="0"
+                    Text="{Binding RoundedRectangle.Radius}" />
+            </Grid>
+
+            <Canvas
+                Grid.Row="0"
+                Grid.Column="3"
+                Margin="0,0,0,-5"
+                Background="AliceBlue" />
+            <Grid
+                x:Name="SlotGrid"
+                Grid.Row="0"
+                Grid.Column="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    FontWeight="Bold"
+                    Text="Slot" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Text="X coordinate" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Text="Y coordinate" />
+                <TextBox
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Text="{Binding Slot.XCoordinate}" />
+                <TextBox
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Text="{Binding Slot.YCoordinate}" />
+
+                <TextBlock
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Text="Length" />
+                <TextBlock
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Text="Height" />
+                <TextBox
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Text="{Binding Slot.Length}" />
+                <TextBox
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Text="{Binding Slot.Height}" />
+
+                <TextBlock
+                    Grid.Row="5"
+                    Grid.Column="0"
+                    Text="Radius" />
+                <TextBox
+                    Grid.Row="6"
+                    Grid.Column="0"
+                    IsReadOnly="True"
+                    Text="{Binding Slot.Radius}" />
+            </Grid>
+            <!--#endregion-->
+
+            <!--#region Band layout-->
+            <Grid
+                x:Name="BandLayoutGrid"
+                Grid.Row="2"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="4"
+                Margin="0,30,0,20"
+                VerticalAlignment="Stretch"
+                Background="WhiteSmoke">
+                <Grid.Resources>
+                    <Style x:Key="BandLayoutBorder" TargetType="Border">
+                        <!--<Setter Property="Background" Value="WhiteSmoke" />-->
+                        <Setter Property="BorderBrush" Value="DimGray" />
+                        <Setter Property="MinHeight" Value="65" />
+                        <Setter Property="SnapsToDevicePixels" Value="True" />
+                        <Setter Property="VerticalAlignment" Value="Stretch" />
+                    </Style>
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Canvas
+                    x:Name="DxfCanvas"
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    SizeChanged="DxfCanvas_OnSizeChanged" />
+                <Border
+                    Grid.Row="0"
+                    Margin="0"
+                    BorderThickness="0,0.5,0,0"
+                    Style="{StaticResource BandLayoutBorder}" />
+                <Border
+                    Grid.Row="1"
+                    Margin="0"
+                    BorderThickness="0,0,0,0.5"
+                    Style="{StaticResource BandLayoutBorder}" />
+                <Rectangle
+                    Grid.Row="1"
+                    Height="1"
+                    Margin="0"
+                    VerticalAlignment="Top"
+                    SnapsToDevicePixels="True"
+                    Stroke="RoyalBlue"
+                    StrokeDashArray="5 8"
+                    StrokeThickness="0,0,0,0.5" />
+            </Grid>
+            <!--#endregion-->
+
+            <!--#region Band Size-->
+            <Grid
+                x:Name="BandSizeGrid"
+                Grid.Row="5"
+                Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    FontWeight="Bold"
+                    Text="Band size" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Text="Length" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Text="Height" />
+                <TextBox
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    IsReadOnly="True"
+                    Text="{Binding ElementName=DxfCanvas, Path=ActualWidth, Mode=OneWay}" />
+                <TextBox
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    IsReadOnly="True"
+                    Text="{Binding ElementName=DxfCanvas, Path=ActualHeight, Mode=OneWay}" />
+            </Grid>
+            <!--#endregion-->
+
+            <!--#region Drawing File-->
+            <Grid
+                x:Name="FileToInsertGrid"
+                Grid.Row="5"
+                Grid.Column="1"
+                Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    FontWeight="Bold"
+                    Text="File with drawing to insert" />
+                <ComboBox
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="2"
+                    Margin="2.5,5,5,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    SelectedIndex="{Binding DrawingSourceType}">
+                    <ComboBoxItem Content="Insert drawing from the file" />
+                    <ComboBoxItem Content="Insert drawing from a binary field" />
+                </ComboBox>
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Text="Path" />
+                <Grid
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox
+                        x:Name="FilenameTextBox"
+                        Grid.Column="0"
+                        IsReadOnly="True"
+                        Text="{Binding Filename, Mode=OneWay}" />
+                    <StackPanel
+                        Grid.Column="1"
+                        Margin="0,0,5,0"
+                        Orientation="Horizontal">
+                        <Button
+                            x:Name="ClearFileButton"
+                            Width="28"
+                            Height="{Binding ElementName=FilenameTextBox, Path=Height}"
+                            Margin="5,-1,0,0"
+                            HorizontalAlignment="Right"
+                            Click="ClearFileButton_OnClick"
+                            Content="clear"
+                            FontSize="10"
+                            IsEnabled="False" />
+                        <Button
+                            x:Name="SelectFileButton"
+                            Width="28"
+                            Height="{Binding ElementName=FilenameTextBox, Path=Height}"
+                            Margin="5,-1,0,0"
+                            Padding="0"
+                            VerticalAlignment="Top"
+                            Click="SelectFileButton_OnClick"
+                            Content="···" />
+                    </StackPanel>
+                </Grid>
+                <TextBlock
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Text="Rotation degrees" />
+                <TextBox
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Text="{Binding RotationDegrees}" />
+                <Button
+                    x:Name="ExportPngButton"
+                    Grid.Row="3"
+                    Grid.RowSpan="2"
+                    Grid.Column="3"
+                    Margin="0,5,5,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    BorderThickness="0"
+                    Click="ExportPngButton_OnClick"
+                    Content="Export PNG"
+                    IsEnabled="False" />
+            </Grid>
+            <!--#endregion-->
+
+            <Grid Grid.Row="5" Grid.Column="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <StackPanel
+                    x:Name="MoreGrid"
+                    Grid.Row="0"
+                    HorizontalAlignment="Right">
+                    <CheckBox
+                        VerticalAlignment="Bottom"
+                        Content="Show container"
+                        IsChecked="{Binding ShowContainer}" />
+                    <CheckBox
+                        VerticalAlignment="Bottom"
+                        Content="Show original drawing only if fits"
+                        IsChecked="{Binding ShowOriginalOnlyIfFits}" />
+                    <CheckBox
+                        VerticalAlignment="Bottom"
+                        Content="Automatic trial warning close"
+                        IsChecked="{Binding TrialWarningAutoClose}" />
+                </StackPanel>
+
+                <Button
+                    x:Name="DrawButton"
+                    Grid.Row="1"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    BorderThickness="0"
+                    Click="DrawButton_OnClick"
+                    Content="Draw"
+                    IsEnabled="{Binding HasChanges}" />
+                <!--#endregion-->
+
+            </Grid>
+        </Grid>
+    </DockPanel>
+</Window>
