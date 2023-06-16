@@ -375,7 +375,7 @@ internal static class CadLibService
         // Remove text, dimensions, layers, ...
         string drawingName = Path.GetFileName(filename);
         string[] excludedEntities = { "DIMENSION", "MTEXT" };
-        string[] excludedLayers = { "AM_5", "AM_7" };
+        string[] excludedLayers = { "SOME_LAYER_NAME" };
         DxfModel dxfClonedModel = CloneAndSimplify(dxfModel, excludedEntities, excludedLayers, drawingName);
 
         // Image size calculation
