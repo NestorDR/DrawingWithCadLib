@@ -143,7 +143,7 @@ internal static class CadLibService
 
         string drawingName = Path.GetFileName(filename);
         string[] excludedEntities = { "DIMENSION", "MTEXT" };
-        string[] excludedLayers = { "AM_5", "AM_7" };
+        string[] excludedLayers = { "SOME_LAYER_NAME" };
         DxfModel dxfClonedModel = CloneAndSimplify(dxfModel, excludedEntities, excludedLayers, drawingName);
 
         // Instantiate block where the entities will be copied
