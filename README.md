@@ -2,7 +2,7 @@
 
 ## Description
 
-A basic learning about [WoutWare CadLib](https://www.woutware.com/) version 6.0.
+A basic learning about drawing on the screen with [WoutWare CadLib](https://www.woutware.com/) version 6.0.
 
 This example code just draws some basic shapes on the screen and insert pre-existent drawings, useful as a proof of concept. 
 
