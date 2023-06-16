@@ -151,14 +151,15 @@ internal static class CadLibService
         string blockName = Path.GetFileNameWithoutExtension(filename);
         DxfBlock block = new(blockName);
 
-        bounds = GetBounds(dxfClonedModel);     // Get original bounds
+        // Get original bounds
+        bounds = GetBounds(dxfClonedModel);
 
         // Instantiate matrix needed to translate drawings to the coordinate origin
         Matrix4D matrix = ToTranslatePointZero(bounds);   
         // Upgrade matrix to rotate, if that is required
         if (rotationDegrees != 0d) matrix *= ToRotateZ(rotationDegrees);
 
-        // Transformation configuration
+        // Instantiate transformation configuration
         TransformConfig transformConfig = new();
         
         // Translate and rotate (applying the transform) and add to the block
@@ -167,11 +168,12 @@ internal static class CadLibService
             // Relocate drawing relative to coordinates origin (0, 0, 0)
             entity.TransformMe(transformConfig, matrix);
 
-            // Add entity to the resulting model and block
+            // Add entity to the resulting block
             block.Entities.Add(entity);
         }
 
-        bounds = GetBounds(dxfClonedModel);      // Get new bounds after translation
+        // Get new bounds after translation
+        bounds = GetBounds(dxfClonedModel);      
 
         return block;
     }
