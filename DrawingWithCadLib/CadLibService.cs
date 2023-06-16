@@ -141,6 +141,7 @@ internal static class CadLibService
 
         if (dxfModel == null) return null;
 
+        // Remove text, dimensions, layers, ...
         string drawingName = Path.GetFileName(filename);
         string[] excludedEntities = { "DIMENSION", "MTEXT" };
         string[] excludedLayers = { "SOME_LAYER_NAME" };
