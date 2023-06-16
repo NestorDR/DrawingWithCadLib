@@ -172,7 +172,7 @@ internal static class CadLibService
             block.Entities.Add(entity);
         }
 
-        // Get new bounds after translation
+        // Get new bounds after translation and rotation
         bounds = GetBounds(dxfClonedModel);      
 
         return block;
